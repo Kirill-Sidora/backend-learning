@@ -11,5 +11,5 @@ application.get("/", (_, response) => {
 const PORT = Number(process.env.PORT);
 
 application.listen(PORT, () => {
-    console.log(`Express server is listening on http://localhost:${PORT}`);
+    console.log(`🚀 Express server is listening on http://localhost:${PORT}`);
 });
