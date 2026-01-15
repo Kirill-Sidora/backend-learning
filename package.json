@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev:app": "nodemon -r dotenv/config --exec ts-node src/index.ts && dev:db",
+    "dev:app": "nodemon -r dotenv/config --exec ts-node src/index.ts",
     "dev:db": "docker compose up -d",
     "dev": "npm run dev:db && npm run dev:app",
     "build": "tsc",
