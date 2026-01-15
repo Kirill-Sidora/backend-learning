@@ -1,0 +1,9 @@
+Table car {
+    id              uuid        [primary key]
+    brand           varchar
+    model           varchar
+    year_of_release integer
+    cost            integer
+    createdAt       timestamp
+    updatedAt       timestamp
+}
