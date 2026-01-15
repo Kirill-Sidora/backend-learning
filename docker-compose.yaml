@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: postgres:latest
+    image: postgres:16
     container_name: backend-learning
     restart: unless-stopped
     env_file:

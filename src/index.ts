@@ -1,6 +1,6 @@
 import express from "express";
-import { Sequelize } from "sequelize";
 import { datavaseConfig } from "./utils/configs";
+import { Sequelize } from "sequelize";
 
 const application = express();
 
@@ -27,9 +27,10 @@ const sequelize = new Sequelize(
     }
 );
 
-const foo = async () => {
+const connectDatabase = async () => {
     try {
         await sequelize.authenticate();
+
         console.log(
             "Connection to the database has been established successfully."
         );
@@ -38,7 +39,7 @@ const foo = async () => {
     }
 };
 
-foo();
+connectDatabase();
 
 application.listen(PORT, () => {
     console.log(`🚀 Express server is listening on http://localhost:${PORT}`);
