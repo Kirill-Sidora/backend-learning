@@ -4,6 +4,6 @@ Table car {
     model           varchar
     year_of_release integer
     cost            integer
-    post_posted     timestamp
-    post_updated    timestamp
+    createdAt       timestamp
+    updatedAt       timestamp
 }
