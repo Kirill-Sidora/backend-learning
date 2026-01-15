@@ -1,0 +1,7 @@
+Table car {
+    id integer [primary key]
+    brand varchar
+    model varchar
+    year_of_release integer
+    cost integer
+}
