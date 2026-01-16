@@ -1,9 +1,13 @@
 import express from "express";
+import router from "./routes/index";
 import { connectToDatabase } from "./models/index";
 
 const application = express();
 
 application.use(express.json());
+application.use(express.urlencoded({ extended: true }));
+
+application.use(router);
 
 application.get("/", (_, response) => {
     response.status(200).send("Hello, Express with TypeScript!");
