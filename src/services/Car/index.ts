@@ -27,7 +27,7 @@ export class CarService {
         });
     }
 
-    public async getCarById(carId: string): Promise<ICar> {
+    public async getCarByIdById(carId: string): Promise<ICar> {
         const event = await Car.findByPk(carId);
 
         if (!event) {

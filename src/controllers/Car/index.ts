@@ -30,7 +30,7 @@ class CarController {
         }
     }
 
-    public static async getCar(
+    public static async getCarById(
         request: Request,
         response: Response,
     ): Promise<void> {
@@ -41,11 +41,12 @@ class CarController {
                 throw new Error("Invalid car ID");
             };
 
-            const car = await carService.getCarById(carId);
+            const car = await carService.getCarByIdById(carId);
 
             sendSuccess(response, {
                 message: "Car fetched succesfully",
                 meta: car,
+                statusCode: 200,
             });
         } catch(error) {
             throw new Error(`Some think went wrong`);
@@ -62,6 +63,7 @@ class CarController {
             sendSuccess(response, {
                 message: "Cars fetched succesfully",
                 meta: cars,
+                statusCode: 200,
             });
         } catch(error) {
             throw new Error(`Some think went wrong`);
