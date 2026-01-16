@@ -3,6 +3,6 @@ import { Router } from 'express';
 
 const router = Router();
 
-router.post('/create/car', CarController.createCar);
+router.post('/', CarController.createCar);
 
 export default router;

@@ -7,8 +7,8 @@ const eventService = new CarService();
 
 class CarController {
     public static async createCar(
-        response: Response,
         request: Request,
+        response: Response,
     ): Promise<void> {
         try {
             const { brand, model, year_of_release, cost } = request.body;

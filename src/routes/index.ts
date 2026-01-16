@@ -3,6 +3,6 @@ import { Router } from "express";
 
 const router = Router();
 
-router.use("/create/car", carRouter);
+router.use("/car", carRouter);
 
 export default router;
