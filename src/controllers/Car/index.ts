@@ -3,7 +3,7 @@ import { CarService } from "../../services/Car";
 import { Request, Response } from 'express';
 
 
-const eventService = new CarService();
+const carService = new CarService();
 
 class CarController {
     public static async createCar(
@@ -13,7 +13,7 @@ class CarController {
         try {
             const { brand, model, year_of_release, cost } = request.body;
 
-            const car = await eventService.createCar({
+            const car = await carService.createCar({
                 brand: brand,
                 model: model,
                 year_of_release: year_of_release,
