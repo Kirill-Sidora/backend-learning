@@ -1,3 +1,4 @@
+import { isNumber, isString } from './../../utils/validators';
 import { sendSuccess } from './../../utils/response';
 import { CarService } from "../../services/Car";
 import { Request, Response } from 'express';
@@ -101,10 +102,6 @@ class CarController {
 
             const normalizedCarId = (typeof carId === 'string') ? carId.trim() : '';
 
-            if(!(typeof carId === 'string')) {
-                throw new Error("Invalid prop 'carId'");
-            }
-
             const body = request.body ?? {};
 
             const hasProp = (key: string) => Object.prototype.hasOwnProperty.call(body, key);
@@ -119,8 +116,8 @@ class CarController {
             } = {};
 
             if(hasProp('brand')) {
-                if(!(typeof body.brand === 'string')) {
-                    throw new Error(`Prop 'brand' must have type string`);
+                if(!isString(body.brand)) {
+                    throw new Error(`Prop 'brand' must have type string, but have`);
                 }
 
                 payload.brand = body.brand;
@@ -129,7 +126,7 @@ class CarController {
             }
 
             if(hasProp('model')) {
-                if(!(typeof body.model === 'string')) {
+                if(!isString(body.model)) {
                     throw new Error("Prop 'model' must have type string")
                 }
                 
@@ -139,7 +136,7 @@ class CarController {
             }
 
             if(hasProp('year_of_release')) {
-                if(!(typeof body.year_of_release === 'number')) {
+                if(!isNumber(body.year_of_release)) {
                     throw new Error("Prop 'year_of_release' must have type number")
                 }
 
@@ -149,7 +146,7 @@ class CarController {
             }
 
             if(hasProp('cost')) {
-                if(!(typeof body.cost === 'number')) {
+                if(!isNumber(body.cost)) {
                     throw new Error("Prop 'cost' must have type number")
                 }
 

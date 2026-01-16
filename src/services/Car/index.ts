@@ -72,23 +72,7 @@ export class CarService {
             throw new Error("Car entity not found");
         }
 
-        const updates: Partial<Car> = {};
-
-        if (payload.brand !== undefined) {
-            updates.brand = payload.brand;
-        }
-
-        if (payload.model !== undefined) {
-            updates.model = payload.model;
-        }
-
-        if (payload.year_of_release !== undefined) {
-            updates.year_of_release = payload.year_of_release;
-        }
-
-        if (payload.cost !== undefined) {
-            updates.cost = payload.cost;
-        }
+        const updates: Partial<Car> = Object.fromEntries(Object.entries(payload).filter(([_,value]) => value !== undefined));
 
         await car.update(updates);
 
