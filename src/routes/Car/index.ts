@@ -5,6 +5,8 @@ const router = Router();
 
 router.post("/", CarController.createCar);
 
+router.put("/:carId", CarController.updateCarById);
+
 router.get("/", CarController.getAllCars);
 
 router.get("/:carId", CarController.getCarById);
