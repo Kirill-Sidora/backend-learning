@@ -5,8 +5,10 @@ const router = Router();
 
 router.post("/", CarController.createCar);
 
+router.get("/", CarController.getAllCars);
+
 router.get("/:carId", CarController.getCarById);
 
-router.get("/", CarController.getAllCars);
+router.delete("/:carId", CarController.deleteCarById);
 
 export default router;
