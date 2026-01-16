@@ -26,4 +26,24 @@ export class CarService {
             return car.get({ plain: true }) as ICar;
         });
     }
+
+    public async getCarById(carId: string): Promise<ICar> {
+        const event = await Car.findByPk(carId);
+
+        if (!event) {
+            throw new Error("Car not found");
+        }
+
+        return event.get({ plain: true }) as ICar;
+    }
+
+    public async getAllCars(): Promise<ICar[]> {
+        const cars = await Car.findAll();
+
+        if(!cars) {
+            throw new Error("No cars found");
+        }
+
+        return cars.map((car) => car.get({ plain: true }) as ICar);
+    }
 }

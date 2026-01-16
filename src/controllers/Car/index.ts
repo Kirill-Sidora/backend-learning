@@ -29,6 +29,44 @@ class CarController {
             throw new Error(`Some think went wrong`);
         }
     }
+
+    public static async getCar(
+        request: Request,
+        response: Response,
+    ): Promise<void> {
+        try {
+            const { carId } = request.params;
+
+            if(!(typeof carId === 'string')) {
+                throw new Error("Invalid car ID");
+            };
+
+            const car = await carService.getCarById(carId);
+
+            sendSuccess(response, {
+                message: "Car fetched succesfully",
+                meta: car,
+            });
+        } catch(error) {
+            throw new Error(`Some think went wrong`);
+        }
+    }
+
+    public static async getAllCars(
+        request: Request,
+        response: Response,
+    ): Promise<void> {
+        try {
+            const cars = await carService.getAllCars();
+
+            sendSuccess(response, {
+                message: "Cars fetched succesfully",
+                meta: cars,
+            });
+        } catch(error) {
+            throw new Error(`Some think went wrong`);
+        }
+    }
 }
 
 export default CarController
