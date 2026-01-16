@@ -67,7 +67,7 @@ class CarController {
             await carService.deleteCarById(carId);
 
             sendSuccess(response, {
-                message: "Car deleted succesfully",
+                message: "Car entity deleted succesfully",
                 statusCode: 204,
             });
         } catch(error) {

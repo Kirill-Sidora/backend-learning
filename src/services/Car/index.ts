@@ -31,7 +31,7 @@ export class CarService {
         const car = await Car.findByPk(carId);
 
         if (!car) {
-            throw new Error("Car not found");
+            throw new Error("Car entity not found");
         }
 
         return car.get({ plain: true }) as ICar;
@@ -41,7 +41,7 @@ export class CarService {
         const car = await Car.findByPk(carId);
 
         if(!car) {
-            throw new Error("Car not found");
+            throw new Error("Car entity not found");
         }    
 
         await car.destroy();
