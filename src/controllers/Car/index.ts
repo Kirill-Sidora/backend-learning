@@ -53,6 +53,28 @@ class CarController {
         }
     }
 
+    public static async deleteCarById(
+        request: Request,
+        response: Response,
+    ): Promise<void> {
+        try {
+            const {carId} = request.params;
+
+            if(!(typeof carId === 'string')) {
+                throw new Error("Invalid car ID");
+            }
+
+            await carService.deleteCarById(carId);
+
+            sendSuccess(response, {
+                message: "Car deleted succesfully",
+                statusCode: 204,
+            });
+        } catch(error) {
+            throw new Error("Error");
+        };
+    }
+
     public static async getAllCars(
         request: Request,
         response: Response,

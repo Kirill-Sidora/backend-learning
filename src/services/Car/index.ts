@@ -28,13 +28,23 @@ export class CarService {
     }
 
     public async getCarByIdById(carId: string): Promise<ICar> {
-        const event = await Car.findByPk(carId);
+        const car = await Car.findByPk(carId);
 
-        if (!event) {
+        if (!car) {
             throw new Error("Car not found");
         }
 
-        return event.get({ plain: true }) as ICar;
+        return car.get({ plain: true }) as ICar;
+    }
+
+    public async deleteCarById(carId: string): Promise<void> {
+        const car = await Car.findByPk(carId);
+
+        if(!car) {
+            throw new Error("Car not found");
+        }    
+
+        await car.destroy();
     }
 
     public async getAllCars(): Promise<ICar[]> {
