@@ -1,8 +1,10 @@
+import { ErrorCode, ErrorMessage, HTTPStatusCode, ResponseMessage } from './../../utils/statuses';
 import { isNumber, isString } from './../../utils/validators';
+import { HTTPError } from './../../utils/errors/HTTPError';
+import { NextFunction, Request, Response } from 'express';
 import { sendSuccess } from './../../utils/response';
 import { CarService } from "../../services/Car";
-import { Request, Response } from 'express';
-
+import { ICar } from './../../domains/Car';
 
 const carService = new CarService();
 
@@ -10,9 +12,20 @@ class CarController {
     public static async createCar(
         request: Request,
         response: Response,
+        next: NextFunction,
     ): Promise<void> {
         try {
             const { brand, model, year_of_release, cost } = request.body;
+
+            const isCarEntityPayloadValid: boolean = !isString(brand) || !isString(model) || !isNumber(year_of_release) || !isNumber(cost);
+
+            if(!isCarEntityPayloadValid) {
+                throw new HTTPError(
+                    HTTPStatusCode.BAD_REQUEST,
+                    ErrorMessage.CAR_INPUT_INVALID,
+                    ErrorCode.CAR_INPUT_INVALID,
+                )
+            }
 
             const car = await carService.createCar({
                 brand: brand,
@@ -22,91 +35,107 @@ class CarController {
             })
 
             sendSuccess(response, {
-                message: "Car created succesfully",
+                message: ResponseMessage.CAR_ENTITY_CREATED,
                 meta: car,
-                statusCode: 201,
+                statusCode: HTTPStatusCode.CREATED,
             })
         } catch(error) {
-            throw new Error(`Some think went wrong`);
+            next(error);
         }
     }
 
     public static async getCarById(
         request: Request,
         response: Response,
+        next: NextFunction,
     ): Promise<void> {
         try {
             const { carId } = request.params;
 
-            if(!(typeof carId === 'string')) {
-                throw new Error("Invalid car ID");
-            };
+            const normalizedCarId: string = isString(carId) ? carId.trim() : '';
 
-            const car = await carService.getCarByIdById(carId);
+            if(!normalizedCarId) {
+                throw new HTTPError(
+                    HTTPStatusCode.BAD_REQUEST,
+                    ErrorMessage.CAR_INPUT_INVALID,
+                    ErrorCode.CAR_INPUT_INVALID
+                )
+            }
+
+            const car = await carService.getCarByIdById(normalizedCarId);
 
             sendSuccess(response, {
-                message: "Car fetched succesfully",
+                message: ResponseMessage.CAR_ENTITY_GETTED_BY_ID,
                 meta: car,
-                statusCode: 200,
+                statusCode: HTTPStatusCode.OK,
             });
         } catch(error) {
-            throw new Error(`Some think went wrong`);
+            next(error);
         }
     }
 
     public static async deleteCarById(
         request: Request,
         response: Response,
+        next: NextFunction,
     ): Promise<void> {
         try {
-            const {carId} = request.params;
+            const { carId } = request.params;
 
-            if(!(typeof carId === 'string')) {
-                throw new Error("Invalid car ID");
+            const normalizedCarId: string = isString(carId) ? carId.trim() : '';
+
+            if(!normalizedCarId) {
+                throw new HTTPError(
+                    HTTPStatusCode.BAD_REQUEST,
+                    ErrorMessage.CAR_INPUT_INVALID,
+                    ErrorCode.CAR_INPUT_INVALID
+                )
             }
 
-            await carService.deleteCarById(carId);
+            await carService.deleteCarById(normalizedCarId);
 
             sendSuccess(response, {
-                message: "Car entity deleted succesfully",
-                statusCode: 204,
+                message: ResponseMessage.CAR_ENTITY_DELETED_BY_ID,
+                statusCode: HTTPStatusCode.NOT_CONTENT,
             });
         } catch(error) {
-            throw new Error("Error");
+            next(error);
         };
     }
 
     public static async getAllCars(
-        request: Request,
+        _request: Request,
         response: Response,
+        next: NextFunction,
     ): Promise<void> {
         try {
             const cars = await carService.getAllCars();
 
             sendSuccess(response, {
-                message: "Cars fetched succesfully",
+                message: ResponseMessage.CARS_ENTITIES_GETTED,
                 meta: cars,
-                statusCode: 200,
+                statusCode: HTTPStatusCode.OK,
             });
         } catch(error) {
-            throw new Error(`Some think went wrong`);
+            next(error);
         }
     }
 
     public static async updateCarById(
         request: Request,
         response: Response,
+        next: NextFunction,
     ): Promise<void> {
         try {
             const { carId } = request.params;
 
-            const normalizedCarId = (typeof carId === 'string') ? carId.trim() : '';
+            const normalizedCarId = isString(carId) ? carId.trim() : '';
 
             const body = request.body ?? {};
 
-            const hasProp = (key: string) => Object.prototype.hasOwnProperty.call(body, key);
+            const hasProp = (key: string): boolean => Object.prototype.hasOwnProperty.call(body, key);
 
-            let hasUpdates = false;
+            let hasUpdates: boolean = false;
 
             const payload: {
                 brand?: string;
@@ -117,7 +146,11 @@ class CarController {
 
             if(hasProp('brand')) {
                 if(!isString(body.brand)) {
-                    throw new Error(`Prop 'brand' must have type string, but have`);
+                    throw new HTTPError(
+                        HTTPStatusCode.BAD_REQUEST,
+                        ErrorMessage.CAR_INPUT_INVALID,
+                        ErrorCode.CAR_INPUT_INVALID,
+                    );
                 }
 
                 payload.brand = body.brand;
@@ -127,7 +160,11 @@ class CarController {
 
             if(hasProp('model')) {
                 if(!isString(body.model)) {
-                    throw new Error("Prop 'model' must have type string")
+                    throw new HTTPError(
+                        HTTPStatusCode.BAD_REQUEST,
+                        ErrorMessage.CAR_INPUT_INVALID,
+                        ErrorCode.CAR_INPUT_INVALID,
+                    );
                 }
                 
                 payload.model = body.model;
@@ -137,7 +174,11 @@ class CarController {
 
             if(hasProp('year_of_release')) {
                 if(!isNumber(body.year_of_release)) {
-                    throw new Error("Prop 'year_of_release' must have type number")
+                    throw new HTTPError(
+                        HTTPStatusCode.BAD_REQUEST,
+                        ErrorMessage.CAR_INPUT_INVALID,
+                        ErrorCode.CAR_INPUT_INVALID,
+                    );
                 }
 
                 payload.year_of_release = body.year_of_release;
@@ -147,7 +188,11 @@ class CarController {
 
             if(hasProp('cost')) {
                 if(!isNumber(body.cost)) {
-                    throw new Error("Prop 'cost' must have type number")
+                    throw new HTTPError(
+                        HTTPStatusCode.BAD_REQUEST,
+                        ErrorMessage.CAR_INPUT_INVALID,
+                        ErrorCode.CAR_INPUT_INVALID,
+                    );
                 }
 
                 payload.cost = body.cost;
@@ -156,21 +201,25 @@ class CarController {
             }
 
             if(!hasUpdates) {
-                throw new Error("Invalid input props");
+                throw new HTTPError(
+                    HTTPStatusCode.BAD_REQUEST,
+                    ErrorMessage.CAR_INPUT_INVALID,
+                    ErrorCode.CAR_INPUT_INVALID,
+                );
             }
 
-            const car = await carService.updateCarById({
+            const car: ICar = await carService.updateCarById({
                 carId: normalizedCarId,
                 ...payload
             })
 
             sendSuccess(response, {
-                message: "Car updated succesfuly",
+                message: ResponseMessage.CAR_ENTITY_UPDATED,
                 meta: car,
-                statusCode: 200,
+                statusCode: HTTPStatusCode.OK,
             })
         } catch(error) {
-            throw new Error(error as string);
+            next(error);
         }
     }
 }

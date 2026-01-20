@@ -1,5 +1,5 @@
 import { ErrorCode, ErrorMessage, HTTPStatusCode } from "./../../utils/statuses";
-import { Response } from "express";
+import { NextFunction, Response, Request } from "express";
 import { Error } from "sequelize";
 
 interface IExtendedError extends Error {
@@ -8,15 +8,12 @@ interface IExtendedError extends Error {
     code?: ErrorCode
 }
 
-interface IHandlerError {
-    error: IExtendedError;
-    response: Response;
-}
-
-const handlerError = ({
-    error,
-    response,
-}: IHandlerError): void => {
+const handlerError = (
+    error: IExtendedError,
+    _request: Request,
+    response: Response,
+    _next: NextFunction,
+): void => {
     const statusCode: number = error.statusCode ?? error.status ?? HTTPStatusCode.INTERNAL_SERVER_ERROR;
 
     const code: ErrorCode = error.code ?? ErrorCode.INTERNAL;
