@@ -10,12 +10,6 @@ const router = Router();
  *      tags:
  *            - Car
  *      summary: Create car entity
- *      parameters:
- *            - in: path
- *              name: carId
- *              required: true
- *              schema:
- *                  type: string
  *      responses:
  *          200:
  *              description: Car entity created
