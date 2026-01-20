@@ -177,26 +177,6 @@ const definition = {
                     },
                 ],
             },
-            // CarRequestCreateResponse: {
-            //     allOf: [
-            //         { $ref: '#/components/schemas/SuccessResponse' },
-            //         { 
-            //             properties: {
-            //                 meta: {
-            //                     oneOf: [
-            //                         { $ref: '#components/schemas/CarRequestEntity' },
-            //                         {
-            //                             type: 'object',
-            //                             properties: {
-            //                                 joined: { type: 'boolean' },
-            //                             },
-            //                         },
-            //                     ],
-            //                 },
-            //             },
-            //         },
-            //     ],
-            // },
         },
     },
     externalDocs: {
