@@ -38,7 +38,7 @@ router.post("/", CarController.createCar);
  *   put:
  *     tags:
  *       - Car
- *     summary: Update existing car fields
+ *     summary: Update existing car entity fields
  *     parameters:
  *       - in: path
  *         name: carId

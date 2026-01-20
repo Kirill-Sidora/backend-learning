@@ -1,5 +1,5 @@
-import { applicationConfig } from "./application";
 import { Paths } from "./../../utils/constants/app";
+import { applicationConfig } from "./application";
 import { Options } from "swagger-jsdoc";
 
 const successResponseSchema = {
@@ -19,10 +19,6 @@ const successResponseSchema = {
                 { type: "array", items: {} },
                 { type: null },
             ],
-        },
-        tockens: {
-            type: "object",
-            descrition: "JWT payload or empty object",
         },
     },
     required: ["ok", "message", "meta", "tockens"],
