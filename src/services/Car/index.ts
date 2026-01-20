@@ -1,3 +1,5 @@
+import { ErrorCode, ErrorMessage, HTTPStatusCode } from "./../../utils/statuses";
+import { HTTPError } from "./../../utils/errors/HTTPError";
 import { Car } from "./../../models/car.model";
 import { ICar } from "./../../domains/Car";
 import { sequelize } from "./../../models";
@@ -39,7 +41,11 @@ export class CarService {
         const car = await Car.findByPk(carId);
 
         if (!car) {
-            throw new Error("Car entity not found");
+            throw new HTTPError(
+                HTTPStatusCode.BAD_REQUEST,
+                ErrorMessage.CAR_ENTITY_NOT_FOUND,
+                ErrorCode.CAR_ENTITY_NOT_FOUND,
+            );
         }
 
         return car.get({ plain: true }) as ICar;
@@ -48,9 +54,13 @@ export class CarService {
     public async deleteCarById(carId: string): Promise<void> {
         const car = await Car.findByPk(carId);
 
-        if(!car) {
-            throw new Error("Car entity not found");
-        }    
+        if (!car) {
+            throw new HTTPError(
+                HTTPStatusCode.BAD_REQUEST,
+                ErrorMessage.CAR_ENTITY_NOT_FOUND,
+                ErrorCode.CAR_ENTITY_NOT_FOUND,
+            );
+        }
 
         await car.destroy();
     }
@@ -59,7 +69,11 @@ export class CarService {
         const cars = await Car.findAll();
 
         if (!cars) {
-            throw new Error("No cars found");
+            throw new HTTPError(
+                HTTPStatusCode.NO_CONTENT,
+                ErrorMessage.CARS_ENTITIES_NOT_FOUND,
+                ErrorCode.CARS_ENTITIES_NOT_FOUND,
+            );
         }
 
         return cars.map((car) => car.get({ plain: true }) as ICar);
@@ -67,9 +81,13 @@ export class CarService {
 
     public async updateCarById(payload: IUpdateCarInput): Promise<ICar> {
         const car = await Car.findByPk(payload.carId);
-
+        
         if (!car) {
-            throw new Error("Car entity not found");
+            throw new HTTPError(
+                HTTPStatusCode.BAD_REQUEST,
+                ErrorMessage.CAR_ENTITY_NOT_FOUND,
+                ErrorCode.CAR_ENTITY_NOT_FOUND,
+            );
         }
 
         const updates: Partial<Car> = Object.fromEntries(Object.entries(payload).filter(([_,value]) => value !== undefined));

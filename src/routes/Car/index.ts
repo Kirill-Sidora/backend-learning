@@ -11,7 +11,7 @@ const router = Router();
  *            - Car
  *      summary: Create car entity
  *      responses:
- *          200:
+ *          201:
  *              description: Car entity created
  *              content:
  *                  application/json:
@@ -63,7 +63,7 @@ router.post("/", CarController.createCar);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
+ *               $ref: '#/components/schemas/CarEntityNotFound'
  */
 router.put("/:carId", CarController.updateCarById);
 
@@ -81,12 +81,6 @@ router.put("/:carId", CarController.updateCarById);
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/CarResponse'
- *       400:
- *         description: Invalid payload
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
  */
 router.get("/", CarController.getAllCars);
 
@@ -116,6 +110,12 @@ router.get("/", CarController.getAllCars);
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
+ *       404:
+ *         description: Car entity not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/CarEntityNotFound'
  */
 router.get("/:carId", CarController.getCarById);
 
@@ -144,7 +144,7 @@ router.get("/:carId", CarController.getCarById);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
+ *               $ref: '#/components/schemas/CarEntityNotFound'
  */
 router.delete("/:carId", CarController.deleteCarById);
 

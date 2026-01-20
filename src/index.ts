@@ -1,6 +1,7 @@
 import express from "express";
 import router from "./routes/index";
 import swaggerUi from "swagger-ui-express";
+import handlerError from "./middlewares/handlerError";
 import { swaggerSpecification } from "./docs/swagger";
 import { connectToDatabase } from "./models/index";
 import { Paths } from "./utils/constants/app";
@@ -25,6 +26,8 @@ application.use(
     swaggerUi.serve,
     swaggerUi.setup(swaggerSpecification, { explorer: true }),
 );
+
+application.use(handlerError)
 
 application.listen(PORT, () => {
     console.log(`🚀 Express server is listening on http://localhost:${PORT}`);
