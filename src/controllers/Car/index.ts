@@ -1,8 +1,8 @@
 import { ErrorCode, ErrorMessage, HTTPStatusCode, ResponseMessage } from './../../utils/statuses';
+import { carEntityPayloadChecker } from './../../utils/handlers';
 import { isNumber, isString } from './../../utils/validators';
 import { HTTPError } from './../../utils/errors/HTTPError';
 import { NextFunction, Request, Response } from 'express';
-import { carEntityPayloadChecker } from './../../utils/handlers';
 import { sendSuccess } from './../../utils/response';
 import { CarService } from "../../services/Car";
 import { ICar } from './../../domains/Car';
@@ -93,7 +93,7 @@ class CarController {
 
             sendSuccess(response, {
                 message: ResponseMessage.CAR_ENTITY_DELETED_BY_ID,
-                statusCode: HTTPStatusCode.NOT_CONTENT,
+                statusCode: HTTPStatusCode.NO_CONTENT,
             });
         } catch(error) {
             next(error);
