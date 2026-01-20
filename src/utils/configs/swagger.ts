@@ -33,8 +33,26 @@ const errorResponseSchema = {
         error: {
             type: 'object',
             properties: {
-                code: { type: 'string', example: "UNAUTHORIZED" },
-                message: { type: 'string', example: "Unauthorized" },
+                code: { type: 'string', example: "CAR_INPUT_INVALID" },
+                message: { type: 'string', example: "Car entity payload is invalid" },
+            },
+            required: [ 'code', 'message' ],
+        },
+    },
+    required: [ 'ok', 'error' ],
+}
+
+const carEntityNotFoundSchema = {
+    type: 'object',
+    properties: {
+        ok: {
+            type: 'boolean', exmple: 'false',
+        },
+        error: {
+            type: 'object',
+            properties: {
+                code: { type: 'string', example: "CAR_ENTITY_NOT_FOUND" },
+                message: { type: 'string', example: "Car entity not found" },
             },
             required: [ 'code', 'message' ],
         },
@@ -64,6 +82,7 @@ const definition = {
         schemas: {
             SuccessResponse: successResponseSchema,
             ErrorResponse: errorResponseSchema,
+            CarEntityNotFound: carEntityNotFoundSchema,
             CarEntity: {
                 type: "object",
                 properties: {
