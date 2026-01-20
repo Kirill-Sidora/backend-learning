@@ -19,9 +19,17 @@ export enum ResponseMessage {
 export enum ErrorCode {
     INTERNAL = "INTERNAL",
     CAR_INPUT_INVALID = "CAR_INPUT_INVALID",
+    CAR_INPUT_BRAND_INVALID = "CAR_INPUT_BRAND_INVALID",
+    CAR_INPUT_MODEL_INVALID = "CAR_INPUT_MODEL_INVALID",
+    CAR_INPUT_YEAR_OF_RELEASE_INVALID = "CAR_INPUT_YEAR_OF_RELEASE_INVALID",
+    CAR_INPUT_COST_INVALID = "CAR_INPUT_COST_INVALID",
 }
 
 export enum ErrorMessage {
     INTERNAL = "Internal server error",
     CAR_INPUT_INVALID = "Car entity payload is invalid",
+    CAR_INPUT_BRAND_INVALID = "In payload 'brand' is invalid",
+    CAR_INPUT_MODEL_INVALID = "In payload 'model' is invalid",
+    CAR_INPUT_YEAR_OF_RELEASE_INVALID = "In payload 'year_of_release' is invalid",
+    CAR_INPUT_COST_INVALID = "In payload 'cost' is invalid",
 }

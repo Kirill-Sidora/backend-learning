@@ -1,7 +1,9 @@
 import { Car } from "./../../models/car.model";
+import { isString } from "utils/validators";
 import { ICar } from "./../../domains/Car";
 import { sequelize } from "./../../models";
 import { Transaction } from "sequelize";
+import { HTTPStatusCode } from "utils/statuses";
 
 export interface ICreateCarInput {
     brand: string;

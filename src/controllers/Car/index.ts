@@ -2,6 +2,7 @@ import { ErrorCode, ErrorMessage, HTTPStatusCode, ResponseMessage } from './../.
 import { isNumber, isString } from './../../utils/validators';
 import { HTTPError } from './../../utils/errors/HTTPError';
 import { NextFunction, Request, Response } from 'express';
+import { carEntityPayloadChecker } from './../../utils/handlers';
 import { sendSuccess } from './../../utils/response';
 import { CarService } from "../../services/Car";
 import { ICar } from './../../domains/Car';
@@ -15,17 +16,9 @@ class CarController {
         next: NextFunction,
     ): Promise<void> {
         try {
+            carEntityPayloadChecker(request.body);
+            
             const { brand, model, year_of_release, cost } = request.body;
-
-            const isCarEntityPayloadValid: boolean = !isString(brand) || !isString(model) || !isNumber(year_of_release) || !isNumber(cost);
-
-            if(!isCarEntityPayloadValid) {
-                throw new HTTPError(
-                    HTTPStatusCode.BAD_REQUEST,
-                    ErrorMessage.CAR_INPUT_INVALID,
-                    ErrorCode.CAR_INPUT_INVALID,
-                )
-            }
 
             const car = await carService.createCar({
                 brand: brand,
@@ -50,6 +43,8 @@ class CarController {
         next: NextFunction,
     ): Promise<void> {
         try {
+            carEntityPayloadChecker(request.body);
+
             const { carId } = request.params;
 
             const normalizedCarId: string = isString(carId) ? carId.trim() : '';
@@ -80,6 +75,8 @@ class CarController {
         next: NextFunction,
     ): Promise<void> {
         try {
+            carEntityPayloadChecker(request.body);
+
             const { carId } = request.params;
 
             const normalizedCarId: string = isString(carId) ? carId.trim() : '';
@@ -127,6 +124,8 @@ class CarController {
         next: NextFunction,
     ): Promise<void> {
         try {
+            carEntityPayloadChecker(request.body);
+
             const { carId } = request.params;
 
             const normalizedCarId = isString(carId) ? carId.trim() : '';
