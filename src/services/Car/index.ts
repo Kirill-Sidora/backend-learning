@@ -42,7 +42,7 @@ export class CarService {
 
         if (!car) {
             throw new HTTPError(
-                HTTPStatusCode.NO_CONTENT,
+                HTTPStatusCode.BAD_REQUEST,
                 ErrorMessage.CAR_ENTITY_NOT_FOUND,
                 ErrorCode.CAR_ENTITY_NOT_FOUND,
             );
@@ -56,7 +56,7 @@ export class CarService {
 
         if (!car) {
             throw new HTTPError(
-                HTTPStatusCode.NO_CONTENT,
+                HTTPStatusCode.BAD_REQUEST,
                 ErrorMessage.CAR_ENTITY_NOT_FOUND,
                 ErrorCode.CAR_ENTITY_NOT_FOUND,
             );
@@ -84,7 +84,7 @@ export class CarService {
         
         if (!car) {
             throw new HTTPError(
-                HTTPStatusCode.NO_CONTENT,
+                HTTPStatusCode.BAD_REQUEST,
                 ErrorMessage.CAR_ENTITY_NOT_FOUND,
                 ErrorCode.CAR_ENTITY_NOT_FOUND,
             );
