@@ -28,6 +28,7 @@
     "@types/node": "^25.0.8",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
+    "express-rate-limit": "^8.2.1",
     "pg": "^8.17.1",
     "sequelize": "^6.37.7",
     "swagger-jsdoc": "^6.2.8",

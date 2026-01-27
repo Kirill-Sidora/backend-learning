@@ -11,7 +11,7 @@ export const sequelize = new Sequelize(
     databaseConfig.username,
     databaseConfig.password,
     {
-        host: databaseConfig.host,
+        host: databaseConfig.host, 
         port: databaseConfig.port,
         dialect: databaseConfig.dialect,
         logging: databaseConfig.logging === true,
